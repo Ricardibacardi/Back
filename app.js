@@ -3,9 +3,8 @@ const { ObjectId, MongoClient } = require('mongodb');
 
 const app = express();
 
-
 async function main() {
-    const uri = 'mongodb://localhost:27017/';
+    const uri = 'mongodb://localhost:27017';
     const client = new MongoClient(uri);
 
     console.log("entra en main");
