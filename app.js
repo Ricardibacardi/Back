@@ -1,7 +1,9 @@
 const express = require('express')
+const cors = require('cors');
 const { ObjectId, MongoClient } = require('mongodb');
 
 const app = express();
+app.use(cors());
 
 async function main() {
     const uri = 'mongodb://127.0.0.1:27017';
@@ -68,4 +70,4 @@ async function main() {
     return 'Ok';
 }
 
-main()
+main().then(console.log).catch(console.error)
