@@ -3,6 +3,7 @@ const cors = require('cors');
 const { ObjectId, MongoClient } = require('mongodb');
 
 const app = express();
+app.use(express.json());
 app.use(cors());
 
 async function main() {
@@ -26,7 +27,7 @@ async function main() {
 
     //Añadimos el contrato desde el formulario
     app.post('/addcontract', async function (req, res) {
-        const data = await colleccionContratos.insertOne([req.body]);
+        const data = await colleccionContratos.insertOne(req.body);
         res.send(data);
     });
 
