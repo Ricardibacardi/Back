@@ -21,7 +21,7 @@ async function main() {
     //Obtenemos la localidad mediante el cp (codigo postal introducido)
     app.get('/getlocalidad/:cp', async function (req, res) {
         const cp = req.params.cp;
-        const data = await colecccionMunicipios.find({codigo_postal:cp}).toArray();
+        const data = await colecccionMunicipios.findOne({codigo_postal:cp});
         res.send(data);
     });
 
