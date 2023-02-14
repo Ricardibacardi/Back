@@ -28,7 +28,12 @@ async function main() {
     //Añadimos el contrato desde el formulario
     app.post('/addcontract', async function (req, res) {
         const nextId = await colleccionContratos.findOne({},{sort:{_id:-1}});
-        req.body.idContrato = nextId.idContrato+1;
+        if(!nextId){
+            req.body.idContrato = 1;
+        }else{
+            req.body.idContrato = nextId.idContrato+1;
+        }
+        
         const data = await colleccionContratos.insertOne(req.body);
         res.send(data);
     });
