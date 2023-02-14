@@ -27,20 +27,22 @@ async function main() {
 
     //Añadimos el contrato desde el formulario
     app.post('/addcontract', async function (req, res) {
+        const nextId = await colleccionContratos.findOne({},{sort:{_id:-1}});
+        req.body.idContrato = nextId.idContrato+1;
         const data = await colleccionContratos.insertOne(req.body);
         res.send(data);
     });
 
     //Modificamos el contrato seleccionado desde la modal
-    app.put('/modifycontract', async function (req, res) {
-        const contractId = ObjectId(req.params._id);
-        const data = await colleccionContratos.updateOne({_id:contractId},{$set:req.body}).toArray();
+    app.put('/modifycontract/:oid', async function (req, res) {
+        const contractId = ObjectId(req.params.oid);
+        const data = await colleccionContratos.updateOne({_id:contractId},{$set:req.body});
         res.send(data);
     });
 
     //Borramos el contrato de la linea
-    app.delete('/deletecontract', async function (req, res) {
-        const contractId = ObjectId(req.params._id);
+    app.delete('/deletecontract/:oid', async function (req, res) {
+        const contractId = ObjectId(req.params.oid);
         const data = await colleccionContratos.deleteOne({_id:contractId});
         res.send(data);
     });
@@ -58,9 +60,9 @@ async function main() {
     });
 
     //Obtenemos la informacion del contrato para imprimirla en la modal
-    app.get('/getcontract/:id', async function (req, res) {
-        const contractId = ObjectId(req.params._id);
-        const data = await colleccionContratos.find({}).toArray();
+    app.get('/getcontract/:oid', async function (req, res) {
+        const contractId = ObjectId(req.params.oid);
+        const data = await colleccionContratos.findOne({_id:contractId});
         res.send(data);
     });
 
